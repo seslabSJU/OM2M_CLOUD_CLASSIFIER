@@ -4,6 +4,8 @@ import pyb, machine, sensor, os, tf, gc, time
 import network, socket, ustruct, utime, random
 import urequests, json, hashlib, image
 
+
+
 om2m = "http://20.214.226.173:8080"
 headers = {
     "Content-Type": "application/vnd.onem2m-res+json; ty=28",
@@ -11,6 +13,7 @@ headers = {
     "X-M2M-RI": "unknownRI",
     "X-M2M-Origin": "admin:admin"
 }
+
 
 def Connect_WiFi():
     SSID='SK_WiFi0666' # Network SSID
@@ -26,6 +29,7 @@ def Connect_WiFi():
     print("WiFi Connected ", wlan.ifconfig())
 
     return wlan
+
 
 def Ntp_Time():
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -43,6 +47,7 @@ def Ntp_Time():
 
     return t
 
+
 def File_Name(rtc):
     # Extract the date and time from the RTC object.
     dateTime = rtc.datetime()
@@ -57,18 +62,44 @@ def File_Name(rtc):
     newName='I'+year+month+day+hour+minute+second+'_'
     return newName
 
+
 def Make_FlexContainer():
     print("Making FlexContainer...")
-    body = {
+    body1 = {
         "hd:binOt" : {
-            "rn": "BinaryObject",
+            "rn": "BinaryObject1",
             "fcied": True,
             "mni": 10
         }
     }
-    result = urequests.post(om2m + "/~/in-cse/in-name/SDT_IPE", headers=headers, json=body)
+    body2 = {
+        "hd:binOt" : {
+            "rn": "BinaryObject2",
+            "fcied": True,
+            "mni": 10
+        }
+    }
+    body3 = {
+        "hd:binOt" : {
+            "rn": "BinaryObject3",
+            "fcied": True,
+            "mni": 10
+        }
+    }
+    body4 = {
+        "hd:bat" : {
+            "rn": "Battery",
+            "fcied": True,
+            "mni": 10
+        }
+    }
+    result = urequests.post(om2m + "/~/in-cse/in-name/SDT_IPE", headers=headers, json=body1)
+    result = urequests.post(om2m + "/~/in-cse/in-name/SDT_IPE", headers=headers, json=body2)
+    result = urequests.post(om2m + "/~/in-cse/in-name/SDT_IPE", headers=headers, json=body3)
+    result = urequests.post(om2m + "/~/in-cse/in-name/SDT_IPE", headers=headers, json=body4)
     print("FlexContainer CREATE")
     return result
+
 
 def Retrieve_FlexContainer():
     print("Retrieve FlexContainer...")
@@ -77,7 +108,7 @@ def Retrieve_FlexContainer():
         "X-M2M-RI": "unknownRI",
         "X-M2M-Origin": "admin:admin"
     }
-    result = urequests.get(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject", headers=rheader)
+    result = urequests.get(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject1", headers=rheader)
     print("RETRIEVE status code:", result.status_code)
     if result.status_code == 404:
         return False
@@ -85,14 +116,21 @@ def Retrieve_FlexContainer():
         return True
 
 
-def Send_Prediction(prediction, image_name, image_content, battery_level):
-    print("Sending Prediction...")
-    size = len(image_content)
-    sha = int.from_bytes(hashlib.sha1(image_content).digest(), 'big')
-    objet = int.from_bytes(bytes(image_content), 'big')
-    print("size:", size)
-    print("hash:", sha)
-    print("objet:", objet)
+def Make_BinaryObject(obj, num):
+    if num == 0:
+        size = len(obj)
+        sha = int.from_bytes(hashlib.sha1(obj).digest(), 'big')
+        objet = int.from_bytes(bytes(obj), 'big')
+        print("size:", size)
+        print("hash:", sha)
+        print("objet:", obj)
+    else:
+        size = len(obj)
+        sha = int.from_bytes(hashlib.sha1(obj.encode('utf-8')).digest(), 'big')
+        objet = obj
+        print("size:", size)
+        print("hash:", sha)
+        print("objet:", obj)
     body = {
         "hd:binOt" : {
             "fcied": True,
@@ -100,16 +138,41 @@ def Send_Prediction(prediction, image_name, image_content, battery_level):
             "size": size,
             "hash": sha,
             "objet": objet,
-            "objTe": "byte",
-            "batLe": battery_level,
-            "imgNa": image_name,
-            "predic": prediction
+            "objTe": "byte"
         }
     }
+    return body
+
+
+def Make_Battery(battery_level):
+    body = {
+        "hd:bat" : {
+            "fcied": True,
+            "mni": 10,
+            "discg": True,
+            "lowBy": False,
+            "matel": "Le",
+            "lvl": battery_level,
+            "charg": True,
+            "eleEy": "100",
+            "batTd": "90",
+            "capay": "100",
+            "volte": "220",
+        }
+    }
+    return body
+
+
+def Send_Prediction(prediction, image_name, image_content, battery_level):
+    print("Sending Prediction...")
     print("OM2M PUTTING")
-    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject", headers=headers, json=body)
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject1", headers=headers, json=Make_BinaryObject(image_content, 0))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject2", headers=headers, json=Make_BinaryObject(image_name, 1))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject3", headers=headers, json=Make_BinaryObject(prediction, 1))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/Battery", headers=headers, json=Make_Battery(battery_level))
     print("OM2M UPDATED")
     return result
+
 
 def Inference(img):
     # Load tf network and labels
@@ -131,8 +194,10 @@ def Inference(img):
             print("%s = %f" % (predictions_list[i][0], predictions_list[i][1]))
     return predicted_label, predictions_list, labels
 
+
 def Battery_Level():
     return random.randint(0, 100)
+
 
 def main():
     BLUE_LED_PIN = 3
@@ -217,5 +282,6 @@ def main():
 
     wlan.disconnect()
     machine.deepsleep()
+
 
 main()
