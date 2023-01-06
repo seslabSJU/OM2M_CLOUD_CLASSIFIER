@@ -16,5 +16,5 @@ Complete the environment by referring to the "Hardware" and "Software" steps on 
 (For other steps, it is enough to read briefly because it is a description of the project.)
 
 ## logical and physical architecture
-If you want to know how OM2M and Cloud Classifier are connected, please refer to the pdf file below.
+If you want to know how OM2M and Cloud Classifier are connected, please refer to the pdf file below.<br>
 [refer to pdf file here](CloudClassifier.pdf)
