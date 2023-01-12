@@ -233,6 +233,7 @@ def main():
     sensor.set_framesize(sensor.QQQVGA)
     sensor.skip_frames(time = 2000) # Let new settings take affect.
 
+    # If the picture is too large, it can be annotated because it affects the processing.
     if not Retrieve_FlexContainer():
         Make_FlexContainer()
 
