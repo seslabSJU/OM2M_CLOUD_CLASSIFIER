@@ -1,7 +1,9 @@
 # OM2M_FCIN_TESTSUITE
 Test code for OM2M_CLOUD_CLASSIFIER<br>
 
-
+## Caution
+Recommend that create FlexContainers in advance or reduce the size of the picture.<br>
+if the aruino board is not performing well.(I hope you can use a better board)
 
 ## Introduction
 OM2M IoT platform is that follows oneM2M(ref. http://www.onem2m.org) standard<br>
