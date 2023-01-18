@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "4c34b22b-70d7-47d3-a04c-534b26dfa508",
+		"name": "cloud classifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17766488"
+	},
+	"item": [
+		{
+			"name": "CREATE Image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-M2M-RI",
+						"value": "unknownRI"
+					},
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.onem2m-res+json; ty=28"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hd:binOt\": {\n        \"rn\": \"Image\",\n        \"fcied\": true,\n        \"mni\": 5,\n        \"cnd\": \"org.onem2m.home.moduleclass.binaryObject\",\n        \"lbl\": \"using for Image by SESLab\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://<om2m_address>:8080/~/in-cse/in-name/SDT_IPE",
+					"protocol": "http",
+					"host": [
+						"<om2m_address>"
+					],
+					"port": "8080",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"SDT_IPE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE ImageName",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-M2M-RI",
+						"value": "unknownRI"
+					},
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.onem2m-res+json; ty=28"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hd:binOt\": {\n        \"rn\": \"ImageName\",\n        \"fcied\": true,\n        \"mni\": 5,\n        \"cnd\": \"org.onem2m.home.moduleclass.binaryObject\",\n        \"lbl\": \"using for ImageName by SESLab\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://<om2m_address>:8080/~/in-cse/in-name/SDT_IPE",
+					"protocol": "http",
+					"host": [
+						"<om2m_address>"
+					],
+					"port": "8080",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"SDT_IPE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Prediction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-M2M-RI",
+						"value": "unknownRI"
+					},
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.onem2m-res+json; ty=28"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hd:binOt\": {\n        \"rn\": \"Prediction\",\n        \"fcied\": true,\n        \"mni\": 5,\n        \"cnd\": \"org.onem2m.home.moduleclass.binaryObject\",\n        \"lbl\": \"using for Prediction by SESLab\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://<om2m_address>:8080/~/in-cse/in-name/SDT_IPE",
+					"protocol": "http",
+					"host": [
+						"<om2m_address>"
+					],
+					"port": "8080",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"SDT_IPE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Battery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "X-M2M-RI",
+						"value": "unknownRI"
+					},
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.onem2m-res+json; ty=28"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hd:bat\": {\n        \"rn\": \"Battery\",\n        \"fcied\": true,\n        \"mni\": 5,\n        \"cnd\": \"org.onem2m.home.moduleclass.battery\",\n        \"lbl\": \"SESLab\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://<om2m_address>:8080/~/in-cse/in-name/SDT_IPE",
+					"protocol": "http",
+					"host": [
+						"<om2m_address>"
+					],
+					"port": "8080",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"SDT_IPE"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

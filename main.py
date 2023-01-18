@@ -6,7 +6,7 @@ import urequests, json, hashlib, image
 
 
 
-om2m = "http://20.214.226.173:8080"
+om2m = "http://<om2m_ip>:8080"
 headers = {
     "Content-Type": "application/vnd.onem2m-res+json; ty=28",
     "Accept": "application/json",
@@ -67,21 +67,21 @@ def Make_FlexContainer():
     print("Making FlexContainer...")
     body1 = {
         "hd:binOt" : {
-            "rn": "BinaryObject1",
+            "rn": "Image",
             "fcied": True,
             "mni": 10
         }
     }
     body2 = {
         "hd:binOt" : {
-            "rn": "BinaryObject2",
+            "rn": "ImageName",
             "fcied": True,
             "mni": 10
         }
     }
     body3 = {
         "hd:binOt" : {
-            "rn": "BinaryObject3",
+            "rn": "Prediction",
             "fcied": True,
             "mni": 10
         }
@@ -108,7 +108,7 @@ def Retrieve_FlexContainer():
         "X-M2M-RI": "unknownRI",
         "X-M2M-Origin": "admin:admin"
     }
-    result = urequests.get(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject1", headers=rheader)
+    result = urequests.get(om2m + "/~/in-cse/in-name/SDT_IPE/Image", headers=rheader)
     print("RETRIEVE status code:", result.status_code)
     if result.status_code == 404:
         return False
@@ -166,9 +166,9 @@ def Make_Battery(battery_level):
 def Send_Prediction(prediction, image_name, image_content, battery_level):
     print("Sending Prediction...")
     print("OM2M PUTTING")
-    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject1", headers=headers, json=Make_BinaryObject(image_content, 0))
-    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject2", headers=headers, json=Make_BinaryObject(image_name, 1))
-    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/BinaryObject3", headers=headers, json=Make_BinaryObject(prediction, 1))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/Image", headers=headers, json=Make_BinaryObject(image_content, 0))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/ImageName", headers=headers, json=Make_BinaryObject(image_name, 1))
+    result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/Prediction", headers=headers, json=Make_BinaryObject(prediction, 1))
     result = urequests.put(om2m + "/~/in-cse/in-name/SDT_IPE/Battery", headers=headers, json=Make_Battery(battery_level))
     print("OM2M UPDATED")
     return result
