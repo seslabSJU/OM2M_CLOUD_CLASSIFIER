@@ -1,6 +1,6 @@
 # TinyML: Cloud Classfier - By: Swapnil - Tue Aug 3 2021
 
-import pyb, machine, sensor, os, tf, gc, time
+import pyb, machine, sensor, tf, gc, time
 import network, socket, ustruct, utime, random
 import urequests, json, hashlib, image
 
@@ -205,7 +205,6 @@ def main():
     RED_LED_PIN = 1
 
     demo = False
-    newFile = False
 
     pyb.LED(BLUE_LED_PIN).on()
     rtc = pyb.RTC()
@@ -219,10 +218,6 @@ def main():
     rtc.datetime((utime.localtime(t)[0], utime.localtime(t)[1], utime.localtime(t)[2],
                 utime.localtime(t)[6], utime.localtime(t)[3], utime.localtime(t)[4],
                 utime.localtime(t)[5], 0))
-    try:
-        os.stat('dataset.csv')
-    except OSError: # If the log file doesn't exist then set newFile to True
-        newFile = True
 
     # Enable RTC interrupts every sleep_duration, camera will RESET after wakeup from deepsleep Mode.
     sleep_duration = 1	# This duration should be in MINUTES(default : 60).
