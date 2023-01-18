@@ -16,8 +16,8 @@ headers = {
 
 
 def Connect_WiFi():
-    SSID='SK_WiFi0666' # Network SSID
-    KEY='1507033098'  # Network key
+    SSID='' # Network SSID
+    KEY=''  # Network key
 
     # Init wlan module and connect to network
     print("Trying to connect with Wi-Fi... (This may take a while)...")
