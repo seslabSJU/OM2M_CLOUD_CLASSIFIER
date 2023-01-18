@@ -245,32 +245,10 @@ def main():
 
         img = sensor.snapshot()
         predicted_label, predictions_list, labels = Inference(img)
-
-        print("Save Image")
-        newName = File_Name(rtc) + predicted_label
-        if not "images" in os.listdir(): os.mkdir("images")
-        img.save('images/' + newName, quality=100)
-
-        print("Save LOG")
-        if(newFile):
-            with open('dataset.csv', 'a') as datasetFile:
-                datasetFile.write('Image_File_Name, ')
-                for i in range(len(labels)):
-                    datasetFile.write(labels[i] + ', ')
-                datasetFile.write('Prediction' + '\n')
-                datasetFile.write(newName + ', ')
-                for i in range(len(predictions_list)):
-                    datasetFile.write(str(predictions_list[i][1]) + ', ')
-                datasetFile.write(predicted_label + '\n')
-        else:
-            with open('dataset.csv', 'a') as datasetFile:
-                datasetFile.write(newName + ', ')
-                for i in range(len(predictions_list)):
-                    datasetFile.write(str(predictions_list[i][1]) + ', ')
-                datasetFile.write(predicted_label + '\n')
+        fileName = File_Name(rtc) + predicted_label
 
         # Send prediction and image to a remote server
-        Send_Prediction(predicted_label, str(newName), img.bytearray(), str(Battery_Level()))
+        Send_Prediction(predicted_label, str(fileName), img.bytearray(), str(Battery_Level()))
 
         gc.collect()
 
